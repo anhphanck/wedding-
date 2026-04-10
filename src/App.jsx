@@ -26,28 +26,32 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
-const MusicPlayer = ({ isPlaying, setIsPlaying }) => {
-  const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
+const MusicPlayer = ({ isPlaying, setIsPlaying, audioRef }) => {
+  // Link nhạc trực tiếp bài "I Do" - Đức Phúc x 911 (Nguồn mp3 trực tiếp cho Safari)
+  const audioUrl = "https://files.catbox.moe/k2n3d1.mp3"; 
 
   const togglePlay = (e) => {
     e.stopPropagation();
-    setIsPlaying(!isPlaying);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(err => console.log("Safari play failed:", err));
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-      {/* YouTube Iframe ẩn - Cách ổn định nhất để phát nhạc trên mọi thiết bị */}
-      {isPlaying && (
-        <div className="hidden">
-          <iframe
-            width="1"
-            height="1"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0`}
-            title="Music Player"
-            allow="autoplay; encrypted-media"
-          ></iframe>
-        </div>
-      )}
+      {/* Thẻ audio chuẩn HTML5 - BẮT BUỘC cho Safari trên iPhone */}
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        loop
+        playsInline
+        preload="auto"
+      />
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
@@ -135,10 +139,15 @@ const WelcomeOverlay = ({ onStart }) => {
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const audioRef = useRef(null);
 
   const handleStart = () => {
     setShowWelcome(false);
-    setIsPlaying(true);
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => console.log("Safari handleStart failed:", err));
+    }
   };
 
   const [timeLeft, setTimeLeft] = useState({
@@ -173,7 +182,7 @@ function App() {
       <AnimatePresence>
         {showWelcome && <WelcomeOverlay onStart={handleStart} />}
       </AnimatePresence>
-      <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+      <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef} />
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"
