@@ -255,7 +255,7 @@ function App() {
           <FadeInSection className="text-center md:text-left space-y-8">
             <motion.p 
               initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={hasStarted ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
               transition={{ duration: 1.8, delay: 0.2, ease: "easeOut" }}
               className="font-serif italic text-xl tracking-[0.3em] uppercase text-gray-800 font-bold mb-4 drop-shadow-sm"
             >
@@ -264,7 +264,7 @@ function App() {
             <div className="space-y-4">
               <motion.h1 
                 initial={{ opacity: 0, x: 150 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={hasStarted ? { opacity: 1, x: 0 } : { opacity: 0, x: 150 }}
                 transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
@@ -272,7 +272,7 @@ function App() {
               </motion.h1>
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
+                animate={hasStarted ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 1.8, delay: 1.0, ease: "easeOut" }}
                 className="font-serif text-3xl md:text-4xl text-[#c59d2a] font-bold"
               >
@@ -280,7 +280,7 @@ function App() {
               </motion.div>
               <motion.h1 
                 initial={{ opacity: 0, x: -150 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={hasStarted ? { opacity: 1, x: 0 } : { opacity: 0, x: -150 }}
                 transition={{ duration: 2, delay: 1.4, ease: "easeOut" }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
@@ -290,7 +290,7 @@ function App() {
             
             <motion.div 
               initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={hasStarted ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
               transition={{ duration: 2, delay: 1.8, ease: "easeOut" }}
               className="flex justify-center md:justify-start items-center gap-4 md:gap-6 mt-12 font-serif text-4xl md:text-7xl text-[#7a5e54] tracking-tighter"
             >
