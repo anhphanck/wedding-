@@ -52,7 +52,7 @@ const MusicPlayer = ({ isPlaying, onToggle }) => {
           ref={iframeRef}
           width="100%"
           height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
+          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
           title="Music Player"
           allow="autoplay; encrypted-media"
           className="absolute inset-0"
