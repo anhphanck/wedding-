@@ -10,6 +10,7 @@ import hoa1 from './assets/hoa1.avif'
 import back1 from './assets/back1.jpg'
 import back2 from './assets/back2.jpg'
 import tieccuoi from './assets/tieccuoi.jpg'
+import tieccuoi1 from './assets/tieccuoi1.jpg'
 import img9 from './assets/9.jpg'
 
 const FadeInSection = ({ children, className = "", delay = 0 }) => {
@@ -518,7 +519,7 @@ yêu người vừa ý, cưới người mình thương...
           <div className="space-y-12">
             <FadeInSection className="flex flex-col md:flex-row gap-8 items-center">
               <div className="w-full md:w-1/2 aspect-video overflow-hidden rounded-lg shadow-md">
-                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=600" alt="Ceremony" className="w-full h-full object-cover" />
+                <img src={tieccuoi1} alt="Ceremony" className="w-full h-full object-cover" />
               </div>
               <div className="w-full md:w-1/2 text-center md:text-left">
                 <h3 className="font-serif text-2xl font-bold text-[#8d6e63] mb-2 uppercase">Lễ Vu Quy</h3>
