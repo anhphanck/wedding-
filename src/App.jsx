@@ -30,43 +30,46 @@ const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
   const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
   const iframeRef = useRef(null);
 
-  // Điều khiển nhạc bằng postMessage để vượt qua rào cản Mobile
+  // Điều khiển nhạc bằng postMessage
   useEffect(() => {
     if (hasStarted && iframeRef.current) {
       const command = isPlaying ? 'playVideo' : 'pauseVideo';
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: 'command', func: command, args: '' }),
-        '*'
-      );
+      // Đợi một chút để iframe kịp khởi tạo API trước khi gửi lệnh đầu tiên
+      const timeoutId = setTimeout(() => {
+        if (iframeRef.current && iframeRef.current.contentWindow) {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func: command, args: '' }),
+            '*'
+          );
+        }
+      }, 500);
+      return () => clearTimeout(timeoutId);
     }
   }, [isPlaying, hasStarted]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
-      {/* YouTube Player ẩn - Dùng kỹ thuật trì hoãn render để Zalo/FB không bắt được video khi crawl */}
+      {/* YouTube Player ẩn - Không dùng visibility:hidden để tránh bị trình duyệt chặn autoplay */}
       {hasStarted && (
         <div 
           className="fixed pointer-events-none opacity-0 overflow-hidden"
           style={{ 
-            width: '0px', 
-            height: '0px', 
-            left: '-100px', 
-            top: '-100px',
-            zIndex: -1,
-            visibility: 'hidden'
+            width: '1px', 
+            height: '1px', 
+            left: '-10px', 
+            top: '-10px',
+            zIndex: -1
           }}
         >
-          <div style={{ visibility: 'visible' }}>
-            <iframe
-              ref={iframeRef}
-              width="1"
-              height="1"
-              src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
-              title="Music Player"
-              allow="autoplay; encrypted-media"
-              className="absolute inset-0"
-            ></iframe>
-          </div>
+          <iframe
+            ref={iframeRef}
+            width="100"
+            height="100"
+            src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${encodeURIComponent(window.location.origin)}`}
+            title="Music Player"
+            allow="autoplay; encrypted-media"
+            className="absolute inset-0"
+          ></iframe>
         </div>
       )}
 
