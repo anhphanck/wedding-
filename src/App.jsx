@@ -29,22 +29,34 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const videoId = "IOe0tNoUGv8"; // ID bài "Em Đồng Ý" của Đức Phúc
+  const audioRef = useRef(null);
+  
+  // Link mp3 thực tế bài "Em Đồng Ý (I Do)" - Nguồn trực tiếp để mobile dễ phát
+  const audioUrl = "https://files.catbox.moe/k2n3d1.mp3";
 
   useEffect(() => {
     const handleFirstInteraction = () => {
-      if (!hasInteracted) {
-        setIsPlaying(true);
-        setHasInteracted(true);
+      if (!hasInteracted && audioRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+          setHasInteracted(true);
+        }).catch(err => {
+          console.log("Autoplay blocked on mobile, waiting for next touch:", err);
+        });
       }
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('scroll', handleFirstInteraction);
+      // Gỡ bỏ listeners sau khi đã tương tác thành công
+      if (hasInteracted) {
+        document.removeEventListener('click', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+        document.removeEventListener('scroll', handleFirstInteraction);
+      }
     };
 
-    document.addEventListener('click', handleFirstInteraction);
-    document.addEventListener('touchstart', handleFirstInteraction);
-    document.addEventListener('scroll', handleFirstInteraction);
+    if (!hasInteracted) {
+      document.addEventListener('click', handleFirstInteraction);
+      document.addEventListener('touchstart', handleFirstInteraction, { passive: false });
+      document.addEventListener('scroll', handleFirstInteraction);
+    }
 
     return () => {
       document.removeEventListener('click', handleFirstInteraction);
@@ -55,12 +67,28 @@ const MusicPlayer = () => {
 
   const togglePlay = (e) => {
     e.stopPropagation();
-    setIsPlaying(!isPlaying);
-    setHasInteracted(true);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+        setHasInteracted(true);
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      {/* Audio Element HTML5 - Cách ổn định nhất cho điện thoại */}
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        loop
+        playsInline
+        preload="auto"
+      />
+
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
         onClick={togglePlay}
@@ -102,19 +130,6 @@ const MusicPlayer = () => {
           </div>
         )}
       </motion.div>
-
-      {/* Iframe YouTube (ẩn) */}
-      {isPlaying && (
-        <div className="hidden">
-          <iframe
-            width="1"
-            height="1"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`}
-            title="Music Player"
-            allow="autoplay"
-          ></iframe>
-        </div>
-      )}
     </div>
   );
 };
