@@ -252,18 +252,18 @@ function App() {
         <div className="max-w-5xl mx-auto w-full grid md:grid-cols-2 items-center gap-4 relative z-10">
           <FadeInSection className="text-center md:text-left space-y-8">
             <motion.p 
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 1.8, delay: 0.2, ease: "easeOut" }}
               className="font-serif italic text-xl tracking-[0.3em] uppercase text-gray-800 font-bold mb-4 drop-shadow-sm"
             >
               Thư mời tiệc cưới
             </motion.p>
             <div className="space-y-4">
               <motion.h1 
-                initial={{ opacity: 0, x: -120 }}
+                initial={{ opacity: 0, x: 150 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
+                transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
                 Tiến Huy
@@ -271,15 +271,15 @@ function App() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.6 }}
+                transition={{ duration: 1.8, delay: 1.0, ease: "easeOut" }}
                 className="font-serif text-3xl md:text-4xl text-[#c59d2a] font-bold"
               >
                 &
               </motion.div>
               <motion.h1 
-                initial={{ opacity: 0, x: 120 }}
+                initial={{ opacity: 0, x: -150 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.8 }}
+                transition={{ duration: 2, delay: 1.4, ease: "easeOut" }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
                 Ánh Nga
@@ -287,9 +287,9 @@ function App() {
             </div>
             
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 2, delay: 1.8, ease: "easeOut" }}
               className="flex justify-center md:justify-start items-center gap-4 md:gap-6 mt-12 font-serif text-4xl md:text-7xl text-[#7a5e54] tracking-tighter"
             >
               <div className="flex flex-col items-center">
