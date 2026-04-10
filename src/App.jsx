@@ -28,21 +28,32 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
 
 const MusicPlayer = ({ isPlaying, onToggle }) => {
   const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
+  const iframeRef = useRef(null);
+
+  // Điều khiển nhạc bằng postMessage để vượt qua rào cản Mobile
+  useEffect(() => {
+    if (iframeRef.current) {
+      const command = isPlaying ? 'playVideo' : 'pauseVideo';
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: '' }),
+        '*'
+      );
+    }
+  }, [isPlaying]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
       {/* YouTube Player ẩn - Phương pháp ổn định nhất cho bài hát cụ thể */}
-      <div className="fixed -left-[1000px] top-0 w-[200px] h-[200px] opacity-0 pointer-events-none overflow-hidden">
-        {isPlaying && (
-          <iframe
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&enablejsapi=1&playsinline=1&rel=0&iv_load_policy=3`}
-            title="Music Player"
-            allow="autoplay; encrypted-media"
-            className="absolute inset-0"
-          ></iframe>
-        )}
+      <div className="fixed -left-[1000px] top-0 w-[300px] h-[300px] opacity-0 pointer-events-none overflow-hidden">
+        <iframe
+          ref={iframeRef}
+          width="100%"
+          height="100%"
+          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
+          title="Music Player"
+          allow="autoplay; encrypted-media"
+          className="absolute inset-0"
+        ></iframe>
       </div>
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
