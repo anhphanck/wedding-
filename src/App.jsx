@@ -304,6 +304,34 @@ function App() {
                 <span className="text-xs uppercase tracking-[0.3em] text-gray-800 font-bold font-sans mt-2 drop-shadow-sm">Chủ Nhật</span>
               </div>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={hasStarted ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 1.6, delay: 2.1, ease: "easeOut" }}
+              className="pt-6"
+            >
+              <div className="grid grid-cols-4 gap-2 md:gap-3 max-w-md mx-auto md:mx-0 bg-white/25 rounded-2xl p-2 md:p-3 border border-white/40 shadow-sm">
+                {[
+                  { label: "Ngày", value: timeLeft.days },
+                  { label: "Giờ", value: timeLeft.hours },
+                  { label: "Phút", value: timeLeft.minutes },
+                  { label: "Giây", value: timeLeft.seconds },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="bg-white/70 backdrop-blur-sm rounded-xl border border-[#d4af37]/30 px-2 py-3 md:px-3 md:py-4 text-center shadow-sm"
+                  >
+                    <p className="text-xl md:text-3xl font-serif font-bold text-[#8d6e63] leading-none">
+                      {String(item.value).padStart(2, "0")}
+                    </p>
+                    <p className="text-[10px] md:text-xs uppercase tracking-widest text-gray-600 mt-2">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </FadeInSection>
 
           <FadeInSection className="relative flex justify-center items-center h-[400px] md:h-[500px]" delay={0.5}>
