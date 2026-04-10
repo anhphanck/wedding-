@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import img1 from './assets/1.jpg'
 import img2 from './assets/2.jpg'
 import img3 from './assets/3.jpg'
@@ -26,68 +26,28 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
-const MusicPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const audioRef = useRef(null);
-  
-  // Link mp3 thực tế bài "Em Đồng Ý (I Do)" - Nguồn trực tiếp để mobile dễ phát
-  const audioUrl = "https://files.catbox.moe/k2n3d1.mp3";
-
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (!hasInteracted && audioRef.current) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-          setHasInteracted(true);
-        }).catch(err => {
-          console.log("Autoplay blocked on mobile, waiting for next touch:", err);
-        });
-      }
-      // Gỡ bỏ listeners sau khi đã tương tác thành công
-      if (hasInteracted) {
-        document.removeEventListener('click', handleFirstInteraction);
-        document.removeEventListener('touchstart', handleFirstInteraction);
-        document.removeEventListener('scroll', handleFirstInteraction);
-      }
-    };
-
-    if (!hasInteracted) {
-      document.addEventListener('click', handleFirstInteraction);
-      document.addEventListener('touchstart', handleFirstInteraction, { passive: false });
-      document.addEventListener('scroll', handleFirstInteraction);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('scroll', handleFirstInteraction);
-    };
-  }, [hasInteracted]);
+const MusicPlayer = ({ isPlaying, setIsPlaying }) => {
+  const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
 
   const togglePlay = (e) => {
     e.stopPropagation();
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-        setHasInteracted(true);
-      }
-      setIsPlaying(!isPlaying);
-    }
+    setIsPlaying(!isPlaying);
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-      {/* Audio Element HTML5 - Cách ổn định nhất cho điện thoại */}
-      <audio
-        ref={audioRef}
-        src={audioUrl}
-        loop
-        playsInline
-        preload="auto"
-      />
+      {/* YouTube Iframe ẩn - Cách ổn định nhất để phát nhạc trên mọi thiết bị */}
+      {isPlaying && (
+        <div className="hidden">
+          <iframe
+            width="1"
+            height="1"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0`}
+            title="Music Player"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+        </div>
+      )}
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
@@ -111,21 +71,16 @@ const MusicPlayer = () => {
         </div>
       </button>
 
-      {/* Tên bài hát & Hướng dẫn nhỏ */}
+      {/* Tên bài hát hiển thị khi đang phát */}
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         className="flex flex-col items-end gap-1"
       >
-        {!hasInteracted && (
-          <div className="bg-[#d4af37] text-white text-[10px] px-2 py-1 rounded-md animate-pulse whitespace-nowrap mb-1">
-            ❤️
-          </div>
-        )}
         {isPlaying && (
           <div className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block">
             <p className="text-xs font-serif text-[#8d6e63] whitespace-nowrap">
-              Đang phát: <span className="font-bold">Em Đồng Ý (I Do)</span>
+              Đang phát: <span className="font-bold">I Do</span>
             </p>
           </div>
         )}
@@ -134,7 +89,58 @@ const MusicPlayer = () => {
   );
 };
 
+const WelcomeOverlay = ({ onStart }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-[#fdfaf5] flex flex-col items-center justify-center p-6 text-center"
+    >
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-[#d4af37]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#8d6e63]/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      </div>
+
+      <div className="relative w-56 h-56 mb-8 group">
+        <div className="absolute inset-0 border-2 border-[#d4af37]/30 rounded-full animate-ping opacity-20"></div>
+        <div className="absolute inset-[-10px] border border-[#d4af37]/10 rounded-full animate-spin-slow"></div>
+        <div className="w-full h-full rounded-full border-8 border-white shadow-2xl overflow-hidden relative z-10">
+           <img src={img9} alt="Couple" className="w-full h-full object-cover object-[center_20%] scale-125 transition-transform duration-700 group-hover:scale-150" />
+        </div>
+      </div>
+      
+      <div className="space-y-4 mb-10 z-10">
+        <h2 className="font-cursive text-5xl md:text-6xl text-[#8d6e63]">Chào mừng bạn</h2>
+        <div className="flex items-center justify-center gap-4">
+          <div className="h-px w-8 bg-[#d4af37]/50"></div>
+          <p className="text-[#d4af37] font-serif italic tracking-[0.3em] uppercase text-xs md:text-sm">Tiến Huy & Ánh Nga</p>
+          <div className="h-px w-8 bg-[#d4af37]/50"></div>
+        </div>
+      </div>
+      
+      <button
+        onClick={onStart}
+        className="group relative px-16 py-5 bg-[#8d6e63] text-white rounded-full font-bold overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300 active:scale-95 z-10"
+      >
+        <span className="relative z-10 flex items-center gap-3 tracking-[0.2em] uppercase text-sm md:text-base">
+          Mở Thiệp <span className="text-2xl animate-pulse">💌</span>
+        </span>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#8d6e63] via-[#7a5e54] to-[#8d6e63] background-animate"></div>
+      </button>
+      
+    </motion.div>
+  );
+};
+
 function App() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  const handleStart = () => {
+    setShowWelcome(false);
+    setIsPlaying(true);
+  };
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -164,7 +170,10 @@ function App() {
 
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
-      <MusicPlayer />
+      <AnimatePresence>
+        {showWelcome && <WelcomeOverlay onStart={handleStart} />}
+      </AnimatePresence>
+      <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"

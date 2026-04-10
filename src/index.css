@@ -23,7 +23,27 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-body {
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes background-animate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.background-animate {
+  background-size: 200% 200%;
+  animation: background-animate 3s ease infinite;
+}
+
+html, body {
   color: rgb(var(--foreground-rgb));
   background: #fff;
 }
