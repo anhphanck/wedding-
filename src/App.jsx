@@ -342,10 +342,10 @@ yêu người vừa ý, cưới người mình thương...
             </p>
           </FadeInSection>
           
-          <div className="grid md:grid-cols-2 gap-6 md:gap-16 mt-12 px-2 md:px-0">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 md:gap-10 mt-12 px-0">
             {/* Information for Groom's Family */}
             <FadeInSection delay={0.2}>
-              <div className="inline-block relative p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
+              <div className="relative w-full p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full">
                 {/* Decorative floral element */}
                 <div className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 opacity-20 rotate-45">
                    <img src={hoa1} alt="" className="w-full h-full" />
@@ -385,7 +385,7 @@ yêu người vừa ý, cưới người mình thương...
 
             {/* Information for Bride's Family */}
             <FadeInSection delay={0.4}>
-              <div className="inline-block relative p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
+              <div className="relative w-full p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full">
                 {/* Decorative floral element */}
                 <div className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 opacity-20 rotate-45">
                    <img src={hoa1} alt="" className="w-full h-full" />
