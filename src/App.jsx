@@ -43,13 +43,16 @@ const MusicPlayer = ({ isPlaying, onToggle }) => {
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
-      {/* YouTube Player ẩn - Phương pháp ổn định nhất cho bài hát cụ thể */}
-      <div className="fixed -left-[1000px] top-0 w-[300px] h-[300px] opacity-0 pointer-events-none overflow-hidden">
+      {/* YouTube Player ẩn - Dùng kỹ thuật kẹp CSS để hoàn toàn vô hình và không bị pop-up */}
+      <div 
+        className="fixed pointer-events-none opacity-0 overflow-hidden"
+        style={{ width: '1px', height: '1px', left: '-10px', top: '-10px', clip: 'rect(1px, 1px, 1px, 1px)' }}
+      >
         <iframe
           ref={iframeRef}
           width="100%"
           height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
+          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
           title="Music Player"
           allow="autoplay; encrypted-media"
           className="absolute inset-0"
