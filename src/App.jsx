@@ -55,7 +55,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fdfaf5] font-sans text-gray-800 overflow-x-hidden">
+    <div className="bg-[#fdfaf5] font-sans text-gray-800">
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"
