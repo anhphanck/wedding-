@@ -147,6 +147,7 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
+  const [rsvpSelection, setRsvpSelection] = useState("");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -166,6 +167,7 @@ function App() {
       
       if (response.ok) {
         setFormStatus({ submitting: false, success: true, error: null });
+        setRsvpSelection(""); // Reset rsvp selection
         e.target.reset();
       } else {
         const data = await response.json();
@@ -593,11 +595,13 @@ yêu người vừa ý, cưới người mình thương...
             <select 
               name="Tham dự"
               required
-              className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none"
+              value={rsvpSelection}
+              onChange={(e) => setRsvpSelection(e.target.value)}
+              className={`w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none transition-colors ${rsvpSelection === "" ? "text-gray-500 font-light" : "text-gray-800 font-normal"}`}
             >
-              <option value="">Bạn sẽ tham dự chứ?</option>
-              <option value="Có, mình sẽ đến!">Có, mình sẽ đến!</option>
-              <option value="Tiếc quá, mình không tham dự được">Tiếc quá, mình không tham dự được</option>
+              <option value="" className="text-gray-500 font-light">Bạn sẽ tham dự chứ?</option>
+              <option value="Có, mình sẽ đến!" className="text-gray-800">Có, mình sẽ đến!</option>
+              <option value="Tiếc quá, mình không tham dự được" className="text-gray-800">Tiếc quá, mình không tham dự được</option>
             </select>
             <textarea 
               name="Lời chúc"
