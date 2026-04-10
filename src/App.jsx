@@ -292,7 +292,7 @@ yêu người vừa ý, cưới người mình thương...
                   <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>2026</span>
                 </div>
-                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
+                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">16:00 PM - CHỦ NHẬT</p>
                 <div className="space-y-2">
                   
                   <p className="text-gray-500 italic text-sm md:text-base">Thôn Trung Tuyến - Xã Kim Thành - Tp Hải Phòng</p>
@@ -311,7 +311,7 @@ yêu người vừa ý, cưới người mình thương...
                    <img src={hoa1} alt="" className="w-full h-full" />
                 </div>
                 
-                <p className="font-serif text-xl md:text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ THÀNH HÔN TẠI NHÀ GÁI</p>
+                <p className="font-serif text-xl md:text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ VU QUY TẠI NHÀ GÁI</p>
                 <div className="flex justify-center items-center gap-4 md:gap-6 text-4xl md:text-5xl font-serif text-[#d4af37] mb-6">
                   <span>19</span>
                   <span className="text-xl md:text-2xl opacity-50">.</span>
@@ -319,7 +319,7 @@ yêu người vừa ý, cưới người mình thương...
                   <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>2026</span>
                 </div>
-                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
+                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">8:00 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
                   
                   <p className="text-gray-500 italic text-sm md:text-base">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
