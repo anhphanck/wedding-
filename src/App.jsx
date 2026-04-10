@@ -348,7 +348,7 @@ yêu người vừa ý, cưới người mình thương...
                   <p className="text-gray-500 italic text-sm md:text-base">Thôn Trung Tuyến - Xã Kim Thành - Tp Hải Phòng</p>
                 </div>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Thôn+Trung+Tuyến+Xã+Kim+Thành+Tp+Hải+Phòng" 
+                  href="https://www.google.com/maps/search/?api=1&query=20.9036493,106.508187" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm"
@@ -380,7 +380,7 @@ yêu người vừa ý, cưới người mình thương...
                   <p className="text-gray-500 italic text-sm md:text-base">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
                 </div>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Khu+Suông+1+Xã+Phú+Khê+Huyện+Cẩm+Khê+Tỉnh+Phú+Thọ" 
+                  href="https://www.google.com/maps/search/?api=1&query=21.381900,105.085898" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm"
@@ -409,15 +409,40 @@ yêu người vừa ý, cưới người mình thương...
             <div className="w-24 h-px bg-white mx-auto opacity-50"></div>
           </FadeInSection>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {[img6, img2, img3, img4, img5, img1].map((img, i) => (
-              <FadeInSection key={i} delay={i * 0.1}>
-                <div className="group relative aspect-[3/4] rounded-2xl shadow-lg border-[6px] md:border-[10px] border-white bg-white transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
+            {[img6, img2, img3, img4, img5, img1].map((img, i) => {
+              // Định nghĩa các hướng đi vào khác nhau cho 6 ảnh
+              const directions = [
+                { x: -100, y: 0 },  // Trái qua
+                { x: 0, y: -100 },  // Trên xuống
+                { x: 100, y: 0 },   // Phải qua
+                { x: 0, y: 100 },   // Dưới lên
+                { x: -100, y: 100 }, // Chéo trái dưới
+                { x: 100, y: -100 }  // Chéo phải trên
+              ];
+
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: directions[i].x, y: directions[i].y }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ 
+                    duration: 1, 
+                    delay: i * 0.1, 
+                    type: "spring", 
+                    stiffness: 50, 
+                    damping: 15 
+                  }}
+                  className="group relative aspect-[3/4] rounded-2xl shadow-lg border-[6px] md:border-[10px] border-white bg-white transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                >
                   <div className="w-full h-full overflow-hidden rounded-lg">
                     <img src={img} alt={`Wedding ${i+1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    {/* Lớp phủ nhẹ khi hover */}
+                    <div className="absolute inset-0 bg-[#8d6e63]/0 group-hover:bg-[#8d6e63]/10 transition-colors duration-500"></div>
                   </div>
-                </div>
-              </FadeInSection>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -528,23 +553,23 @@ yêu người vừa ý, cưới người mình thương...
             className="space-y-6"
           >
             <input 
-              name="Full Name"
+              name="Họ và Tên"
               type="text" 
               placeholder="Họ và tên của bạn" 
               required
               className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none" 
             />
             <select 
-              name="Attendance"
+              name="Tham dự"
               required
               className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none"
             >
               <option value="">Bạn sẽ tham dự chứ?</option>
-              <option value="Yes">Có, mình sẽ đến!</option>
-              <option value="No">Tiếc quá, mình không tham dự được</option>
+              <option value="Có, mình sẽ đến!">Có, mình sẽ đến!</option>
+              <option value="Tiếc quá, mình không tham dự được">Tiếc quá, mình không tham dự được</option>
             </select>
             <textarea 
-              name="Wishes"
+              name="Lời chúc"
               placeholder="Lời chúc gửi tới cô dâu chú rể" 
               rows="4" 
               required
