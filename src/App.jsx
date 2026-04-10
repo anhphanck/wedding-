@@ -137,7 +137,45 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
   const audioRef = useRef(null);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus({ submitting: true, success: false, error: null });
+    
+    const formData = new FormData(e.target);
+    
+    try {
+      // Đã cập nhật Form ID: xykbqjzg
+      const response = await fetch("https://formspree.io/f/xykbqjzg", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setFormStatus({ submitting: false, success: true, error: null });
+        e.target.reset();
+      } else {
+        const data = await response.json();
+        // Nếu lỗi là do chưa set up form, hiển thị hướng dẫn cụ thể
+        if (data.error && (data.error.includes("not set up") || data.error.includes("inactive"))) {
+          setFormStatus({ 
+            submitting: false, 
+            success: false, 
+            error: "Formspree cần được kích hoạt! Hãy kiểm tra email đăng ký Formspree của bạn để nhấn 'Activate' nhé." 
+          });
+        } else {
+          setFormStatus({ submitting: false, success: false, error: data.error || "Có lỗi xảy ra, vui lòng thử lại!" });
+        }
+      }
+    } catch (error) {
+      setFormStatus({ submitting: false, success: false, error: "Không thể kết nối đến máy chủ! Vui lòng kiểm tra mạng." });
+    }
+  };
 
   const handleStart = () => {
     console.log("Start button clicked - Activating YouTube Player");
@@ -317,9 +355,14 @@ yêu người vừa ý, cưới người mình thương...
                   
                   <p className="text-gray-500 italic text-sm md:text-base">Thôn Trung Tuyến - Xã Kim Thành - Tp Hải Phòng</p>
                 </div>
-                <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Thôn+Trung+Tuyến+Xã+Kim+Thành+Tp+Hải+Phòng" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm"
+                >
                   Xem Bản Đồ
-                </button>
+                </a>
               </div>
             </FadeInSection>
 
@@ -344,9 +387,14 @@ yêu người vừa ý, cưới người mình thương...
                   
                   <p className="text-gray-500 italic text-sm md:text-base">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
                 </div>
-                <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Khu+Suông+1+Xã+Phú+Khê+Huyện+Cẩm+Khê+Tỉnh+Phú+Thọ" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm"
+                >
                   Xem Bản Đồ
-                </button>
+                </a>
               </div>
             </FadeInSection>
           </div>
@@ -369,10 +417,10 @@ yêu người vừa ý, cưới người mình thương...
             <div className="w-24 h-px bg-white mx-auto opacity-50"></div>
           </FadeInSection>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {[img1, img2, img3, img4, img5, img6].map((img, i) => (
+            {[img6, img2, img3, img4, img5, img1].map((img, i) => (
               <FadeInSection key={i} delay={i * 0.1}>
-                <div className="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-md bg-white p-2 transition-all duration-500 hover:shadow-2xl">
-                  <div className="w-full h-full overflow-hidden rounded-xl">
+                <div className="group relative aspect-[3/4] rounded-2xl shadow-lg border-[6px] md:border-[10px] border-white bg-white transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
+                  <div className="w-full h-full overflow-hidden rounded-lg">
                     <img src={img} alt={`Wedding ${i+1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   </div>
                 </div>
@@ -423,19 +471,104 @@ yêu người vừa ý, cưới người mình thương...
 
       {/* RSVP */}
       <section className="py-16 md:py-20 bg-[#fdf2f2] px-4">
-        <FadeInSection className="max-w-2xl mx-auto bg-white p-6 md:p-12 rounded-2xl shadow-xl text-center">
+        <FadeInSection className="max-w-2xl mx-auto bg-white p-6 md:p-12 rounded-2xl shadow-xl text-center relative overflow-hidden">
+          {/* Success Overlay */}
+          <AnimatePresence>
+            {formStatus.success && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="absolute inset-0 z-20 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
+              >
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1, rotate: 360 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.2 }}
+                  className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-inner"
+                >
+                  <svg className="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <motion.path 
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" 
+                    />
+                  </svg>
+                </motion.div>
+                
+                <motion.h3 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-3xl font-cursive text-[#8d6e63] mb-4"
+                >
+                  Gửi lời chúc thành công!
+                </motion.h3>
+                
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="text-gray-600 italic mb-8 max-w-[280px]"
+                >
+                  Cảm ơn bạn đã dành tình cảm và sự hiện diện quý báu cho chúng mình. Hẹn gặp lại bạn sớm nhé! ❤️
+                </motion.p>
+                
+                <motion.button 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  onClick={() => setFormStatus(prev => ({ ...prev, success: false }))}
+                  className="px-10 py-3 bg-[#8d6e63] text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#7a5e54] shadow-lg transition-colors"
+                >
+                  Tiếp tục xem thiệp
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <h2 className="font-cursive text-4xl md:text-5xl text-[#8d6e63] mb-4">Gửi Lời Chúc</h2>
           <p className="text-gray-600 mb-8 italic text-sm md:text-base">Sự hiện diện của bạn là niềm vinh hạnh cho chúng mình!</p>
-          <form className="space-y-6">
-            <input type="text" placeholder="Họ và tên của bạn" className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none" />
-            <select className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none">
-              <option>Bạn sẽ tham dự chứ?</option>
-              <option>Có, mình sẽ đến!</option>
-              <option>Tiếc quá, mình không tham dự được</option>
+          
+          <form 
+            onSubmit={handleFormSubmit}
+            className="space-y-6"
+          >
+            <input 
+              name="Full Name"
+              type="text" 
+              placeholder="Họ và tên của bạn" 
+              required
+              className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none" 
+            />
+            <select 
+              name="Attendance"
+              required
+              className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none"
+            >
+              <option value="">Bạn sẽ tham dự chứ?</option>
+              <option value="Yes">Có, mình sẽ đến!</option>
+              <option value="No">Tiếc quá, mình không tham dự được</option>
             </select>
-            <textarea placeholder="Lời chúc gửi tới cô dâu chú rể" rows="4" className="w-full px-6 py-4 bg-[#fdfaf5] border-none rounded-2xl focus:ring-2 focus:ring-[#d4af37] outline-none resize-none"></textarea>
-            <button className="w-full bg-[#8d6e63] text-white font-bold py-4 rounded-full hover:bg-[#7a5e54] transition-colors duration-300 uppercase tracking-widest shadow-lg">
-              Gửi lời chúc
+            <textarea 
+              name="Wishes"
+              placeholder="Lời chúc gửi tới cô dâu chú rể" 
+              rows="4" 
+              required
+              className="w-full px-6 py-4 bg-[#fdfaf5] border-none rounded-2xl focus:ring-2 focus:ring-[#d4af37] outline-none resize-none"
+            ></textarea>
+            
+            {formStatus.error && (
+              <p className="text-red-500 text-sm italic">{formStatus.error}</p>
+            )}
+
+            <button 
+              type="submit"
+              disabled={formStatus.submitting}
+              className={`w-full bg-[#8d6e63] text-white font-bold py-4 rounded-full transition-all duration-300 uppercase tracking-widest shadow-lg ${formStatus.submitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#7a5e54]'}`}
+            >
+              {formStatus.submitting ? 'Đang gửi...' : 'Gửi lời chúc'}
             </button>
           </form>
         </FadeInSection>
