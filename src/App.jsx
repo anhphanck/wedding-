@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import img1 from './assets/1.jpg'
 import img2 from './assets/2.jpg'
@@ -31,7 +31,6 @@ const MusicPlayer = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const videoId = "IOe0tNoUGv8"; // ID bài "Em Đồng Ý" của Đức Phúc
 
-  // Tự động phát nhạc sau khi người dùng tương tác lần đầu với trang web
   useEffect(() => {
     const handleFirstInteraction = () => {
       if (!hasInteracted) {
@@ -40,23 +39,24 @@ const MusicPlayer = () => {
       }
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('scroll', handleFirstInteraction);
     };
 
-    if (!hasInteracted) {
-      document.addEventListener('click', handleFirstInteraction);
-      document.addEventListener('touchstart', handleFirstInteraction);
-    }
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
+    document.addEventListener('scroll', handleFirstInteraction);
 
     return () => {
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('scroll', handleFirstInteraction);
     };
   }, [hasInteracted]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     setIsPlaying(!isPlaying);
-    setHasInteracted(true); // Đánh dấu đã tương tác để không tự động bật lại
+    setHasInteracted(true);
   };
 
   return (
@@ -68,7 +68,6 @@ const MusicPlayer = () => {
         title={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
       >
         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-full">
-           {/* Biểu tượng đĩa nhạc */}
            <div className="absolute inset-0 bg-gradient-to-tr from-[#8d6e63] to-[#d4af37] opacity-10 group-hover:opacity-20 transition-opacity"></div>
            {isPlaying ? (
              <div className="flex gap-1 items-center h-4">
@@ -84,18 +83,25 @@ const MusicPlayer = () => {
         </div>
       </button>
 
-      {/* Tên bài hát hiển thị khi đang phát */}
-      {isPlaying && (
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block"
-        >
-          <p className="text-xs font-serif text-[#8d6e63] whitespace-nowrap">
-            Đang phát: <span className="font-bold">Em Đồng Ý (I Do)</span>
-          </p>
-        </motion.div>
-      )}
+      {/* Tên bài hát & Hướng dẫn nhỏ */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="flex flex-col items-end gap-1"
+      >
+        {!hasInteracted && (
+          <div className="bg-[#d4af37] text-white text-[10px] px-2 py-1 rounded-md animate-pulse whitespace-nowrap mb-1">
+            ❤️
+          </div>
+        )}
+        {isPlaying && (
+          <div className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block">
+            <p className="text-xs font-serif text-[#8d6e63] whitespace-nowrap">
+              Đang phát: <span className="font-bold">Em Đồng Ý (I Do)</span>
+            </p>
+          </div>
+        )}
+      </motion.div>
 
       {/* Iframe YouTube (ẩn) */}
       {isPlaying && (
