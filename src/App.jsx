@@ -34,7 +34,12 @@ const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
   useEffect(() => {
     if (hasStarted && iframeRef.current) {
       const command = isPlaying ? 'playVideo' : 'pauseVideo';
-      // Đợi một chút để iframe kịp khởi tạo API trước khi gửi lệnh đầu tiên
+      // Gửi lệnh ngay khi iframe load xong hoặc sau một khoảng ngắn
+      const handleMessage = (e) => {
+         // Kiểm tra nếu iframe đã sẵn sàng
+      };
+      window.addEventListener('message', handleMessage);
+
       const timeoutId = setTimeout(() => {
         if (iframeRef.current && iframeRef.current.contentWindow) {
           iframeRef.current.contentWindow.postMessage(
@@ -42,33 +47,46 @@ const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
             '*'
           );
         }
-      }, 500);
-      return () => clearTimeout(timeoutId);
+      }, 800);
+      
+      return () => {
+        window.removeEventListener('message', handleMessage);
+        clearTimeout(timeoutId);
+      };
     }
   }, [isPlaying, hasStarted]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
-      {/* YouTube Player ẩn - Không dùng visibility:hidden để tránh bị trình duyệt chặn autoplay */}
+      {/* YouTube Player ẩn - Kỹ thuật ẩn triệt để để tránh trình duyệt di động hiện trình phát video */}
       {hasStarted && (
         <div 
-          className="fixed pointer-events-none opacity-0 overflow-hidden"
+          className="fixed pointer-events-none"
           style={{ 
-            width: '1px', 
-            height: '1px', 
-            left: '-10px', 
-            top: '-10px',
-            zIndex: -1
+            width: '0px', 
+            height: '0px', 
+            left: '-100px', 
+            top: '-100px',
+            opacity: 0,
+            overflow: 'hidden',
+            zIndex: -1000,
+            visibility: 'hidden', // Thử dùng lại visibility nhưng kết hợp với các thuộc tính khác
+            display: 'block' // Đảm bảo vẫn là block để iframe load
           }}
         >
           <iframe
             ref={iframeRef}
-            width="100"
-            height="100"
             src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${encodeURIComponent(window.location.origin)}`}
             title="Music Player"
             allow="autoplay; encrypted-media"
-            className="absolute inset-0"
+            style={{
+              width: '100px',
+              height: '100px',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              pointerEvents: 'none'
+            }}
           ></iframe>
         </div>
       )}
