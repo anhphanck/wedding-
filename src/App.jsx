@@ -27,69 +27,30 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
 };
 
 const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
-  const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
-  const iframeRef = useRef(null);
+  const audioRef = useRef(null);
 
-  // Điều khiển nhạc bằng postMessage
+  // Điều khiển nhạc bằng thẻ audio trực tiếp
   useEffect(() => {
-    if (hasStarted && iframeRef.current) {
-      const command = isPlaying ? 'playVideo' : 'pauseVideo';
-      // Gửi lệnh ngay khi iframe load xong hoặc sau một khoảng ngắn
-      const handleMessage = (e) => {
-         // Kiểm tra nếu iframe đã sẵn sàng
-      };
-      window.addEventListener('message', handleMessage);
-
-      const timeoutId = setTimeout(() => {
-        if (iframeRef.current && iframeRef.current.contentWindow) {
-          iframeRef.current.contentWindow.postMessage(
-            JSON.stringify({ event: 'command', func: command, args: '' }),
-            '*'
-          );
-        }
-      }, 800);
-      
-      return () => {
-        window.removeEventListener('message', handleMessage);
-        clearTimeout(timeoutId);
-      };
+    if (hasStarted && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(error => {
+          console.log("Autoplay bị chặn hoặc lỗi:", error);
+        });
+      } else {
+        audioRef.current.pause();
+      }
     }
   }, [isPlaying, hasStarted]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
-      {/* YouTube Player ẩn - Kỹ thuật ẩn triệt để để tránh trình duyệt di động hiện trình phát video */}
-      {hasStarted && (
-        <div 
-          className="fixed pointer-events-none"
-          style={{ 
-            width: '0px', 
-            height: '0px', 
-            left: '-100px', 
-            top: '-100px',
-            opacity: 0,
-            overflow: 'hidden',
-            zIndex: -1000,
-            visibility: 'hidden', // Thử dùng lại visibility nhưng kết hợp với các thuộc tính khác
-            display: 'block' // Đảm bảo vẫn là block để iframe load
-          }}
-        >
-          <iframe
-            ref={iframeRef}
-            src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${encodeURIComponent(window.location.origin)}`}
-            title="Music Player"
-            allow="autoplay; encrypted-media"
-            style={{
-              width: '100px',
-              height: '100px',
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              pointerEvents: 'none'
-            }}
-          ></iframe>
-        </div>
-      )}
+      {/* Audio Element - Dùng file cục bộ để tránh hiện video trên di động */}
+      <audio
+        ref={audioRef}
+        src="/IDo.mp3"
+        loop
+        preload="auto"
+      />
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
