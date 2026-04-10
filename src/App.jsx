@@ -26,38 +26,49 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
-const MusicPlayer = ({ isPlaying, onToggle }) => {
+const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
   const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
   const iframeRef = useRef(null);
 
   // Điều khiển nhạc bằng postMessage để vượt qua rào cản Mobile
   useEffect(() => {
-    if (iframeRef.current) {
+    if (hasStarted && iframeRef.current) {
       const command = isPlaying ? 'playVideo' : 'pauseVideo';
       iframeRef.current.contentWindow.postMessage(
         JSON.stringify({ event: 'command', func: command, args: '' }),
         '*'
       );
     }
-  }, [isPlaying]);
+  }, [isPlaying, hasStarted]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
-      {/* YouTube Player ẩn - Dùng kỹ thuật kẹp CSS để hoàn toàn vô hình và không bị pop-up */}
-      <div 
-        className="fixed pointer-events-none opacity-0 overflow-hidden"
-        style={{ width: '1px', height: '1px', left: '-10px', top: '-10px', clip: 'rect(1px, 1px, 1px, 1px)' }}
-      >
-        <iframe
-          ref={iframeRef}
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
-          title="Music Player"
-          allow="autoplay; encrypted-media"
-          className="absolute inset-0"
-        ></iframe>
-      </div>
+      {/* YouTube Player ẩn - Dùng kỹ thuật trì hoãn render để Zalo/FB không bắt được video khi crawl */}
+      {hasStarted && (
+        <div 
+          className="fixed pointer-events-none opacity-0 overflow-hidden"
+          style={{ 
+            width: '0px', 
+            height: '0px', 
+            left: '-100px', 
+            top: '-100px',
+            zIndex: -1,
+            visibility: 'hidden'
+          }}
+        >
+          <div style={{ visibility: 'visible' }}>
+            <iframe
+              ref={iframeRef}
+              width="1"
+              height="1"
+              src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&playsinline=1&modestbranding=1&disablekb=1&fs=0&rel=0&iv_load_policy=3&origin=${window.location.origin}`}
+              title="Music Player"
+              allow="autoplay; encrypted-media"
+              className="absolute inset-0"
+            ></iframe>
+          </div>
+        </div>
+      )}
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
@@ -150,6 +161,7 @@ const WelcomeOverlay = ({ onStart, isExiting }) => {
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
@@ -193,6 +205,7 @@ function App() {
 
   const handleStart = () => {
     console.log("Start button clicked - Activating YouTube Player");
+    setHasStarted(true);
     setIsPlaying(true);
     setIsExiting(true);
     setShowWelcome(false);
@@ -203,7 +216,13 @@ function App() {
       e.preventDefault();
       e.stopPropagation();
     }
-    setIsPlaying(!isPlaying);
+    // Chỉ cho phép bật nhạc nếu đã bắt đầu
+    if (!hasStarted) {
+      setHasStarted(true);
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const [timeLeft, setTimeLeft] = useState({
@@ -232,13 +251,12 @@ function App() {
 
     return () => clearInterval(timer);
   }, []);
-
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
       <AnimatePresence>
         {showWelcome && <WelcomeOverlay onStart={handleStart} isExiting={isExiting} />}
       </AnimatePresence>
-      <MusicPlayer isPlaying={isPlaying} onToggle={handleToggleMusic} />
+      <MusicPlayer isPlaying={isPlaying} onToggle={handleToggleMusic} hasStarted={hasStarted} />
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"
