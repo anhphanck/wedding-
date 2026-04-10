@@ -72,16 +72,16 @@ function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="font-serif italic text-xl tracking-[0.3em] uppercase text-gray-600 mb-4"
+              className="font-serif italic text-xl tracking-[0.3em] uppercase text-gray-800 font-bold mb-4 drop-shadow-sm"
             >
-              Chúng tôi cưới
+              Thư mời tiệc cưới
             </motion.p>
             <div className="space-y-4">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
-                className="font-cursive text-5xl md:text-8xl text-[#8d6e63] leading-tight"
+                className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
                 Tiến Huy
               </motion.h1>
@@ -89,7 +89,7 @@ function App() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.6 }}
-                className="font-serif text-3xl md:text-4xl text-[#d4af37]"
+                className="font-serif text-3xl md:text-4xl text-[#c59d2a] font-bold"
               >
                 &
               </motion.div>
@@ -97,7 +97,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="font-cursive text-5xl md:text-8xl text-[#8d6e63] leading-tight"
+                className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
                 Ánh Nga
               </motion.h1>
@@ -107,16 +107,16 @@ function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="flex justify-center md:justify-start items-center gap-4 md:gap-6 mt-12 font-serif text-4xl md:text-7xl text-[#8d6e63] tracking-tighter"
+              className="flex justify-center md:justify-start items-center gap-4 md:gap-6 mt-12 font-serif text-4xl md:text-7xl text-[#7a5e54] tracking-tighter"
             >
               <div className="flex flex-col items-center">
-                <span className="font-bold opacity-90 drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">19</span>
-                <span className="text-xs uppercase tracking-[0.3em] text-[#d4af37] font-sans mt-2">Tháng 04</span>
+                <span className="font-bold opacity-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">19</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-[#c59d2a] font-bold font-sans mt-2 drop-shadow-sm">Tháng 04</span>
               </div>
-              <span className="w-px h-20 bg-gradient-to-b from-transparent via-[#d4af37]/50 to-transparent"></span>
+              <span className="w-px h-20 bg-gradient-to-b from-transparent via-[#d4af37] to-transparent"></span>
               <div className="flex flex-col items-center">
-                <span className="font-bold opacity-90 drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">2026</span>
-                <span className="text-xs uppercase tracking-[0.3em] text-[#d4af37] font-sans mt-2">Chủ Nhật</span>
+                <span className="font-bold opacity-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">2026</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-[#c59d2a] font-bold font-sans mt-2 drop-shadow-sm">Chủ Nhật</span>
               </div>
             </motion.div>
           </FadeInSection>
@@ -151,7 +151,9 @@ function App() {
           <FadeInSection>
             <h2 className="font-cursive text-5xl text-[#8d6e63] mb-8">Trân trọng kính mời</h2>
             <p className="text-xl leading-relaxed text-gray-600 font-serif italic mb-12">
-              "Giữa hàng triệu người, chúng ta đã tìm thấy nhau – đó chính là điều kỳ diệu nhất của tình yêu."
+              "Hôn nhân là chuyện cả đời,
+yêu người vừa ý, cưới người mình thương...
+"
             </p>
           </FadeInSection>
           
@@ -174,8 +176,8 @@ function App() {
                 </div>
                 <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-lg md:text-xl font-medium text-[#8d6e63]">Nhà riêng chú rể</p>
-                  <p className="text-gray-500 italic text-sm md:text-base">Địa chỉ nhà trai</p>
+                  
+                  <p className="text-gray-500 italic text-sm md:text-base">Thôn Trung Tuyến - Xã Kim Thành - Tp Hải Phòng</p>
                 </div>
                 <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
                   Xem Bản Đồ
@@ -201,8 +203,8 @@ function App() {
                 </div>
                 <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-lg md:text-xl font-medium text-[#8d6e63]">Nhà riêng cô dâu</p>
-                  <p className="text-gray-500 italic text-sm md:text-base">Địa chỉ nhà gái</p>
+                  
+                  <p className="text-gray-500 italic text-sm md:text-base">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
                 </div>
                 <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
                   Xem Bản Đồ
@@ -270,10 +272,10 @@ function App() {
               </div>
               <div className="w-full md:w-1/2 text-center md:text-right">
                 <h3 className="font-serif text-2xl font-bold text-[#8d6e63] mb-2 uppercase">Tiệc Cưới</h3>
-                <p className="text-gray-600 mb-4">Trân trọng kính mời quý khách đến dự tiệc mừng tại nhà hàng.</p>
+                <p className="text-gray-600 mb-4">Trân trọng kính mời quý khách đến dự tiệc mừng tại tư gia.</p>
                 <div className="flex justify-center md:justify-end gap-4 text-[#d4af37] font-serif">
-                  <span className="border-r pr-4">19.04.2026</span>
-                  <span>11:00 AM</span>
+                  <span className="border-r pr-4">18.04.2026</span>
+                  <span>16:00 PM</span>
                 </div>
               </div>
             </FadeInSection>
@@ -301,65 +303,28 @@ function App() {
         </FadeInSection>
       </section>
 
-      {/* Gift / QR Section */}
-      <section className="py-20 bg-white px-4 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <FadeInSection className="relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 bg-[#fdfaf5]/50 p-8 md:p-12 rounded-3xl">
-            {/* Groom Gift */}
-            <div className="flex-1 text-center md:text-right space-y-4 z-10 md:pr-12">
-              <h3 className="font-serif text-2xl text-[#8d6e63] font-bold">Mừng cưới đến chú rể</h3>
-              <div className="flex flex-row-reverse items-center justify-center md:justify-start gap-4">
-                <div className="w-32 h-32 bg-white p-2 rounded-xl shadow-sm border border-[#d4af37]/20">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ExampleGroomBank" alt="QR Groom" className="w-full h-full" />
-                </div>
-                <div className="text-[#8d6e63] text-sm">
-                  <p className="font-bold uppercase">Ngân hàng Vietcombank</p>
-                  <p>BÙI TIẾN HUY</p>
-                  <p className="font-mono">1234567890</p>
-                </div>
-              </div>
-            </div>
+      
 
+      {/* Footer */}
+      <footer className="pt-16 pb-6 bg-[#fdfaf5] border-t border-gray-100 text-center">
+        <FadeInSection>
+          <div className="flex flex-col items-center">
             {/* Center Image */}
-            <div className="relative w-64 h-80 md:w-80 md:h-[400px] z-20 shrink-0">
+            <div className="relative w-64 h-80 md:w-80 md:h-[400px] z-20 shrink-0 mb-8 mx-auto">
               <div className="w-full h-full rounded-t-full overflow-hidden border-[10px] border-white shadow-2xl relative">
                 <img src={img9} alt="Couple" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 border border-[#d4af37]/20 rounded-t-full pointer-events-none m-1"></div>
               </div>
             </div>
 
-            {/* Bride Gift */}
-            <div className="flex-1 text-center md:text-left space-y-4 z-10 md:pl-12">
-              <h3 className="font-serif text-2xl text-[#8d6e63] font-bold">Mừng cưới đến cô dâu</h3>
-              <div className="flex items-center justify-center md:justify-start gap-4">
-                <div className="w-32 h-32 bg-white p-2 rounded-xl shadow-sm border border-[#d4af37]/20">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ExampleBrideBank" alt="QR Bride" className="w-full h-full" />
-                </div>
-                <div className="text-[#8d6e63] text-sm">
-                  <p className="font-bold uppercase">Ngân hàng Techcombank</p>
-                  <p>TRẦN ÁNH NGA</p>
-                  <p className="font-mono">0987654321</p>
-                </div>
-              </div>
+            <div className="space-y-2 mb-2">
+              <h2 className="font-cursive text-4xl text-[#8d6e63]">Thank You!</h2>
+              <p className="text-gray-500 italic text-lg">Hẹn gặp lại bạn trong ngày vui của chúng mình!</p>
             </div>
-          </FadeInSection>
 
-          <FadeInSection className="mt-12 md:mt-16 text-center space-y-6">
-            <h2 className="font-cursive text-5xl md:text-6xl text-[#8d6e63] drop-shadow-sm">Mừng cưới</h2>
-            <p className="max-w-2xl mx-auto text-gray-500 italic text-xs md:text-base leading-relaxed px-4">
-              Nếu có thể, bạn hãy tới tham dự Đám cưới, chung vui và Mừng cưới trực tiếp cho chúng mình nhé ^^. Cảm ơn bạn rất nhiều!
-            </p>
-          </FadeInSection>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 bg-[#fdfaf5] border-t border-gray-100 text-center">
-        <FadeInSection>
-          <h2 className="font-cursive text-4xl text-[#8d6e63] mb-4">Thank You!</h2>
-          <p className="text-gray-500 italic">Hẹn gặp lại bạn trong ngày vui của chúng mình!</p>
-          <div className="mt-8 opacity-20 w-32 h-32 mx-auto">
-             <img src={hoa1} alt="" className="w-full h-full object-contain" />
+            <div className="opacity-10 w-8 h-8 mx-auto">
+              <img src={hoa1} alt="" className="w-full h-full object-contain" />
+            </div>
           </div>
         </FadeInSection>
       </footer>
