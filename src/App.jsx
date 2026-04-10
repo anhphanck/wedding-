@@ -81,7 +81,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
-                className="font-cursive text-7xl md:text-8xl text-[#8d6e63] leading-tight"
+                className="font-cursive text-5xl md:text-8xl text-[#8d6e63] leading-tight"
               >
                 Tiến Huy
               </motion.h1>
@@ -89,7 +89,7 @@ function App() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.6 }}
-                className="font-serif text-4xl text-[#d4af37]"
+                className="font-serif text-3xl md:text-4xl text-[#d4af37]"
               >
                 &
               </motion.div>
@@ -97,7 +97,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="font-cursive text-7xl md:text-8xl text-[#8d6e63] leading-tight"
+                className="font-cursive text-5xl md:text-8xl text-[#8d6e63] leading-tight"
               >
                 Ánh Nga
               </motion.h1>
@@ -107,7 +107,7 @@ function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="flex justify-center md:justify-start items-center gap-6 mt-12 font-serif text-5xl md:text-7xl text-[#8d6e63] tracking-tighter"
+              className="flex justify-center md:justify-start items-center gap-4 md:gap-6 mt-12 font-serif text-4xl md:text-7xl text-[#8d6e63] tracking-tighter"
             >
               <div className="flex flex-col items-center">
                 <span className="font-bold opacity-90 drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">19</span>
@@ -121,12 +121,12 @@ function App() {
             </motion.div>
           </FadeInSection>
 
-          <FadeInSection className="relative flex justify-center items-center h-[500px]" delay={0.5}>
+          <FadeInSection className="relative flex justify-center items-center h-[400px] md:h-[500px]" delay={0.5}>
             {/* Main Arch Image */}
             <motion.div 
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
-              className="w-[350px] h-[500px] rounded-t-full overflow-hidden border-[12px] border-white shadow-2xl z-10 relative"
+              className="w-[250px] h-[350px] md:w-[350px] md:h-[500px] rounded-t-full overflow-hidden border-[8px] md:border-[12px] border-white shadow-2xl z-10 relative"
             >
               <img src={img4} alt="Wedding Couple" className="w-full h-full object-cover" />
               {/* Decorative line around arch */}
@@ -136,7 +136,7 @@ function App() {
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 2 }}
               transition={{ duration: 0.5 }}
-              className="absolute bottom-0 right-0 md:-right-8 w-64 h-80 rounded-t-full overflow-hidden border-8 border-white shadow-xl z-20 transform translate-y-8"
+              className="absolute bottom-0 right-0 md:-right-8 w-40 h-56 md:w-64 md:h-80 rounded-t-full overflow-hidden border-4 md:border-8 border-white shadow-xl z-20 transform translate-y-4 md:translate-y-8"
             >
               <img src={img2} alt="Couple Detail" className="w-full h-full object-cover" />
               <div className="absolute inset-0 border border-[#d4af37]/20 rounded-t-full pointer-events-none m-1"></div>
@@ -155,27 +155,27 @@ function App() {
             </p>
           </FadeInSection>
           
-          <div className="grid md:grid-cols-2 gap-6 md:gap-16 mt-12">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-16 mt-12 px-2 md:px-0">
             {/* Information for Groom's Family */}
             <FadeInSection delay={0.2}>
-              <div className="inline-block relative p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
+              <div className="inline-block relative p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
                 {/* Decorative floral element */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 opacity-20 rotate-45">
+                <div className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 opacity-20 rotate-45">
                    <img src={hoa1} alt="" className="w-full h-full" />
                 </div>
                 
-                <p className="font-serif text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ THÀNH HÔN TẠI NHÀ TRAI</p>
-                <div className="flex justify-center items-center gap-6 text-5xl font-serif text-[#d4af37] mb-6">
+                <p className="font-serif text-xl md:text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ THÀNH HÔN TẠI NHÀ TRAI</p>
+                <div className="flex justify-center items-center gap-4 md:gap-6 text-4xl md:text-5xl font-serif text-[#d4af37] mb-6">
                   <span>19</span>
-                  <span className="text-2xl opacity-50">.</span>
+                  <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>04</span>
-                  <span className="text-2xl opacity-50">.</span>
+                  <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>2026</span>
                 </div>
-                <p className="text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
+                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-xl font-medium text-[#8d6e63]">Nhà riêng chú rể</p>
-                  <p className="text-gray-500 italic">Địa chỉ nhà trai</p>
+                  <p className="text-lg md:text-xl font-medium text-[#8d6e63]">Nhà riêng chú rể</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">Địa chỉ nhà trai</p>
                 </div>
                 <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
                   Xem Bản Đồ
@@ -185,24 +185,24 @@ function App() {
 
             {/* Information for Bride's Family */}
             <FadeInSection delay={0.4}>
-              <div className="inline-block relative p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
+              <div className="inline-block relative p-6 md:p-12 bg-[#fdfaf5] border border-[#d4af37]/20 rounded-2xl shadow-sm overflow-hidden h-full md:mx-6">
                 {/* Decorative floral element */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 opacity-20 rotate-45">
+                <div className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 opacity-20 rotate-45">
                    <img src={hoa1} alt="" className="w-full h-full" />
                 </div>
                 
-                <p className="font-serif text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ THÀNH HÔN TẠI NHÀ GÁI</p>
-                <div className="flex justify-center items-center gap-6 text-5xl font-serif text-[#d4af37] mb-6">
+                <p className="font-serif text-xl md:text-2xl tracking-widest text-[#8d6e63] mb-6 border-b border-[#d4af37]/30 pb-4">LỄ THÀNH HÔN TẠI NHÀ GÁI</p>
+                <div className="flex justify-center items-center gap-4 md:gap-6 text-4xl md:text-5xl font-serif text-[#d4af37] mb-6">
                   <span>19</span>
-                  <span className="text-2xl opacity-50">.</span>
+                  <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>04</span>
-                  <span className="text-2xl opacity-50">.</span>
+                  <span className="text-xl md:text-2xl opacity-50">.</span>
                   <span>2026</span>
                 </div>
-                <p className="text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
+                <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">10:30 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-xl font-medium text-[#8d6e63]">Nhà riêng cô dâu</p>
-                  <p className="text-gray-500 italic">Địa chỉ nhà gái</p>
+                  <p className="text-lg md:text-xl font-medium text-[#8d6e63]">Nhà riêng cô dâu</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">Địa chỉ nhà gái</p>
                 </div>
                 <button className="mt-10 px-8 py-3 bg-[#8d6e63] text-white rounded-full hover:bg-[#7a5e54] transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-sm">
                   Xem Bản Đồ
@@ -215,7 +215,7 @@ function App() {
 
       {/* Album Section */}
       <section 
-        className="py-24 px-4 overflow-hidden"
+        className="py-16 md:py-24 px-4 overflow-hidden"
         style={{ 
           backgroundImage: `url(${back2})`, 
           backgroundSize: 'cover', 
@@ -224,11 +224,11 @@ function App() {
         }}
       >
         <div className="max-w-6xl mx-auto">
-          <FadeInSection className="text-center mb-16 space-y-4">
-            <h2 className="font-cursive text-6xl text-white drop-shadow-lg">Album Hình Cưới</h2>
+          <FadeInSection className="text-center mb-12 md:mb-16 space-y-4">
+            <h2 className="font-cursive text-5xl md:text-6xl text-white drop-shadow-lg">Album Hình Cưới</h2>
             <div className="w-24 h-px bg-white mx-auto opacity-50"></div>
           </FadeInSection>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {[img1, img2, img3, img4, img5, img6].map((img, i) => (
               <FadeInSection key={i} delay={i * 0.1}>
                 <div className="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-md bg-white p-2 transition-all duration-500 hover:shadow-2xl">
@@ -282,10 +282,10 @@ function App() {
       </section>
 
       {/* RSVP */}
-      <section className="py-20 bg-[#fdf2f2] px-4">
-        <FadeInSection className="max-w-2xl mx-auto bg-white p-12 rounded-2xl shadow-xl text-center">
-          <h2 className="font-cursive text-5xl text-[#8d6e63] mb-4">Gửi Lời Chúc</h2>
-          <p className="text-gray-600 mb-8 italic">Sự hiện diện của bạn là niềm vinh hạnh cho chúng mình!</p>
+      <section className="py-16 md:py-20 bg-[#fdf2f2] px-4">
+        <FadeInSection className="max-w-2xl mx-auto bg-white p-6 md:p-12 rounded-2xl shadow-xl text-center">
+          <h2 className="font-cursive text-4xl md:text-5xl text-[#8d6e63] mb-4">Gửi Lời Chúc</h2>
+          <p className="text-gray-600 mb-8 italic text-sm md:text-base">Sự hiện diện của bạn là niềm vinh hạnh cho chúng mình!</p>
           <form className="space-y-6">
             <input type="text" placeholder="Họ và tên của bạn" className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none" />
             <select className="w-full px-6 py-3 bg-[#fdfaf5] border-none rounded-full focus:ring-2 focus:ring-[#d4af37] outline-none appearance-none">
@@ -344,9 +344,9 @@ function App() {
             </div>
           </FadeInSection>
 
-          <FadeInSection className="mt-16 text-center space-y-6">
-            <h2 className="font-cursive text-6xl text-[#8d6e63] drop-shadow-sm">Mừng cưới</h2>
-            <p className="max-w-2xl mx-auto text-gray-500 italic text-sm md:text-base leading-relaxed">
+          <FadeInSection className="mt-12 md:mt-16 text-center space-y-6">
+            <h2 className="font-cursive text-5xl md:text-6xl text-[#8d6e63] drop-shadow-sm">Mừng cưới</h2>
+            <p className="max-w-2xl mx-auto text-gray-500 italic text-xs md:text-base leading-relaxed px-4">
               Nếu có thể, bạn hãy tới tham dự Đám cưới, chung vui và Mừng cưới trực tiếp cho chúng mình nhé ^^. Cảm ơn bạn rất nhiều!
             </p>
           </FadeInSection>
