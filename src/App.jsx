@@ -32,17 +32,17 @@ const MusicPlayer = ({ isPlaying, onToggle }) => {
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
       {/* YouTube Player ẩn - Phương pháp ổn định nhất cho bài hát cụ thể */}
-      {isPlaying && (
-        <div className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none">
+      <div className="fixed top-0 left-0 w-10 h-10 opacity-0 pointer-events-none">
+        {isPlaying && (
           <iframe
             width="100%"
             height="100%"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&enablejsapi=1`}
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&enablejsapi=1&playsinline=1`}
             title="Music Player"
             allow="autoplay; encrypted-media"
           ></iframe>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
@@ -138,7 +138,6 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
-  const audioRef = useRef(null);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -221,13 +220,6 @@ function App() {
 
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
-      <audio
-        ref={audioRef}
-        src="https://files.catbox.moe/k2n3d1.mp3"
-        loop
-        playsInline
-        preload="auto"
-      />
       <AnimatePresence>
         {showWelcome && <WelcomeOverlay onStart={handleStart} isExiting={isExiting} />}
       </AnimatePresence>
