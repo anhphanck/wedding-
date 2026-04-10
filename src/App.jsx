@@ -359,7 +359,9 @@ yêu người vừa ý, cưới người mình thương...
                 </div>
                 <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">16:00 PM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-gray-500 italic text-sm md:text-base">Nhà ông bà Dương Vấn</p>
+                <p className="text-gray-500 italic text-sm md:text-base">(NHẰM NGÀY 03/03 BÍNH NGỌ)</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">ÔNG: NGUYỄN VĂN DƯƠNG</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">BÀ: VŨ THỊ VẤN</p>
                   <p className="text-gray-500 italic text-sm md:text-base">Thôn Trung Tuyến - Xã Kim Thành - Tp Hải Phòng</p>
                 </div>
                 <a 
@@ -391,7 +393,9 @@ yêu người vừa ý, cưới người mình thương...
                 </div>
                 <p className="text-2xl md:text-3xl font-serif text-[#8d6e63] mb-4 uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold drop-shadow-sm">8:00 AM - CHỦ NHẬT</p>
                 <div className="space-y-2">
-                  <p className="text-gray-500 italic text-sm md:text-base">Nhà ông bà Giao Luyến</p>
+                <p className="text-gray-500 italic text-sm md:text-base">(NHẰM NGÀY 03/03 BÍNH NGỌ)</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">ÔNG: PHAN THÔNG GIAO</p>
+                  <p className="text-gray-500 italic text-sm md:text-base">BÀ: QUẤT THỊ LUYẾN</p>
                   <p className="text-gray-500 italic text-sm md:text-base">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
                 </div>
                 <a 
