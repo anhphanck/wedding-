@@ -261,8 +261,8 @@ function App() {
             </motion.p>
             <div className="space-y-4">
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -120 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
@@ -277,8 +277,8 @@ function App() {
                 &
               </motion.div>
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: 120 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.8 }}
                 className="font-cursive text-5xl md:text-8xl text-[#7a5e54] leading-tight font-bold drop-shadow-md"
               >
@@ -621,7 +621,14 @@ yêu người vừa ý, cưới người mình thương...
             </div>
 
             <div className="space-y-2 mb-2">
-              <h2 className="font-cursive text-4xl text-[#8d6e63]">Thank You!</h2>
+              <motion.h2 
+                className="font-cursive text-4xl text-[#8d6e63]"
+                animate={{ rotate: [0, 1.5, -1.5, 1, -1, 0], y: [0, -2, 2, -1, 1, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+                whileHover={{ rotate: [0, 2.5, -2.5, 0], scale: 1.03, transition: { duration: 0.6 } }}
+              >
+                Thank You!
+              </motion.h2>
               <p className="text-gray-500 italic text-lg">Hẹn gặp lại bạn trong ngày vui của chúng mình!</p>
             </div>
 
