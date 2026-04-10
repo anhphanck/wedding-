@@ -26,6 +26,93 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
+const MusicPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const videoId = "IOe0tNoUGv8"; // ID bài "Em Đồng Ý" của Đức Phúc
+
+  // Tự động phát nhạc sau khi người dùng tương tác lần đầu với trang web
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (!hasInteracted) {
+        setIsPlaying(true);
+        setHasInteracted(true);
+      }
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
+    };
+
+    if (!hasInteracted) {
+      document.addEventListener('click', handleFirstInteraction);
+      document.addEventListener('touchstart', handleFirstInteraction);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
+    };
+  }, [hasInteracted]);
+
+  const togglePlay = (e) => {
+    e.stopPropagation();
+    setIsPlaying(!isPlaying);
+    setHasInteracted(true); // Đánh dấu đã tương tác để không tự động bật lại
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
+      <button
+        onClick={togglePlay}
+        className={`w-14 h-14 rounded-full bg-white shadow-2xl border-2 border-[#d4af37] flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95 group ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+        title={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
+      >
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-full">
+           {/* Biểu tượng đĩa nhạc */}
+           <div className="absolute inset-0 bg-gradient-to-tr from-[#8d6e63] to-[#d4af37] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+           {isPlaying ? (
+             <div className="flex gap-1 items-center h-4">
+                <span className="w-1 bg-[#8d6e63] rounded-full animate-[bounce_0.6s_infinite_0s]"></span>
+                <span className="w-1 bg-[#8d6e63] rounded-full animate-[bounce_0.6s_infinite_0.2s]"></span>
+                <span className="w-1 bg-[#8d6e63] rounded-full animate-[bounce_0.6s_infinite_0.4s]"></span>
+             </div>
+           ) : (
+             <svg className="w-6 h-6 text-[#8d6e63] fill-current" viewBox="0 0 24 24">
+               <path d="M8 5v14l11-7z" />
+             </svg>
+           )}
+        </div>
+      </button>
+
+      {/* Tên bài hát hiển thị khi đang phát */}
+      {isPlaying && (
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block"
+        >
+          <p className="text-xs font-serif text-[#8d6e63] whitespace-nowrap">
+            Đang phát: <span className="font-bold">Em Đồng Ý (I Do)</span>
+          </p>
+        </motion.div>
+      )}
+
+      {/* Iframe YouTube (ẩn) */}
+      {isPlaying && (
+        <div className="hidden">
+          <iframe
+            width="1"
+            height="1"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`}
+            title="Music Player"
+            allow="autoplay"
+          ></iframe>
+        </div>
+      )}
+    </div>
+  );
+};
+
 function App() {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -56,6 +143,7 @@ function App() {
 
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
+      <MusicPlayer />
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"
@@ -111,12 +199,12 @@ function App() {
             >
               <div className="flex flex-col items-center">
                 <span className="font-bold opacity-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">19</span>
-                <span className="text-xs uppercase tracking-[0.3em] text-[#c59d2a] font-bold font-sans mt-2 drop-shadow-sm">Tháng 04</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-gray-800 font-bold font-sans mt-2 drop-shadow-sm">Tháng 04</span>
               </div>
               <span className="w-px h-20 bg-gradient-to-b from-transparent via-[#d4af37] to-transparent"></span>
               <div className="flex flex-col items-center">
                 <span className="font-bold opacity-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">2026</span>
-                <span className="text-xs uppercase tracking-[0.3em] text-[#c59d2a] font-bold font-sans mt-2 drop-shadow-sm">Chủ Nhật</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-gray-800 font-bold font-sans mt-2 drop-shadow-sm">Chủ Nhật</span>
               </div>
             </motion.div>
           </FadeInSection>
