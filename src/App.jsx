@@ -26,36 +26,27 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
-const MusicPlayer = ({ isPlaying, setIsPlaying, audioRef }) => {
-  // Link nhạc trực tiếp bài "I Do" - Đức Phúc x 911 (Nguồn mp3 trực tiếp cho Safari)
-  const audioUrl = "https://files.catbox.moe/k2n3d1.mp3"; 
-
-  const togglePlay = (e) => {
-    e.stopPropagation();
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(err => console.log("Safari play failed:", err));
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
+const MusicPlayer = ({ isPlaying, onToggle }) => {
+  const videoId = "IOe0tNoUGv8"; // ID bài "I Do" - Đức Phúc x 911
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-      {/* Thẻ audio chuẩn HTML5 - BẮT BUỘC cho Safari trên iPhone */}
-      <audio
-        ref={audioRef}
-        src={audioUrl}
-        loop
-        playsInline
-        preload="auto"
-      />
+    <div className="fixed bottom-6 right-6 z-[60] flex items-center gap-3">
+      {/* YouTube Player ẩn - Phương pháp ổn định nhất cho bài hát cụ thể */}
+      {isPlaying && (
+        <div className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none">
+          <iframe
+            width="100%"
+            height="100%"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&showinfo=0&enablejsapi=1`}
+            title="Music Player"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+        </div>
+      )}
 
       {/* Nút bật/tắt nhạc với hiệu ứng đĩa quay */}
       <button
-        onClick={togglePlay}
+        onClick={onToggle}
         className={`w-14 h-14 rounded-full bg-white shadow-2xl border-2 border-[#d4af37] flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95 group ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
         title={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
       >
@@ -76,29 +67,31 @@ const MusicPlayer = ({ isPlaying, setIsPlaying, audioRef }) => {
       </button>
 
       {/* Tên bài hát hiển thị khi đang phát */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        className="flex flex-col items-end gap-1"
-      >
+      <AnimatePresence>
         {isPlaying && (
-          <div className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-[#d4af37]/20 hidden md:block"
+          >
             <p className="text-xs font-serif text-[#8d6e63] whitespace-nowrap">
               Đang phát: <span className="font-bold">I Do</span>
             </p>
-          </div>
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
 
-const WelcomeOverlay = ({ onStart }) => {
+const WelcomeOverlay = ({ onStart, isExiting }) => {
   return (
     <motion.div
       initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-[#fdfaf5] flex flex-col items-center justify-center p-6 text-center"
+      className={`fixed inset-0 z-[100] bg-[#fdfaf5] flex flex-col items-center justify-center p-6 text-center ${isExiting ? 'pointer-events-none' : ''}`}
     >
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-0 w-64 h-64 bg-[#d4af37]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -123,7 +116,11 @@ const WelcomeOverlay = ({ onStart }) => {
       </div>
       
       <button
-        onClick={onStart}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onStart();
+        }}
         className="group relative px-16 py-5 bg-[#8d6e63] text-white rounded-full font-bold overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300 active:scale-95 z-10"
       >
         <span className="relative z-10 flex items-center gap-3 tracking-[0.2em] uppercase text-sm md:text-base">
@@ -139,15 +136,22 @@ const WelcomeOverlay = ({ onStart }) => {
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
   const audioRef = useRef(null);
 
   const handleStart = () => {
+    console.log("Start button clicked - Activating YouTube Player");
+    setIsPlaying(true);
+    setIsExiting(true);
     setShowWelcome(false);
-    if (audioRef.current) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(err => console.log("Safari handleStart failed:", err));
+  };
+
+  const handleToggleMusic = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
+    setIsPlaying(!isPlaying);
   };
 
   const [timeLeft, setTimeLeft] = useState({
@@ -179,10 +183,17 @@ function App() {
 
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
+      <audio
+        ref={audioRef}
+        src="https://files.catbox.moe/k2n3d1.mp3"
+        loop
+        playsInline
+        preload="auto"
+      />
       <AnimatePresence>
-        {showWelcome && <WelcomeOverlay onStart={handleStart} />}
+        {showWelcome && <WelcomeOverlay onStart={handleStart} isExiting={isExiting} />}
       </AnimatePresence>
-      <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef} />
+      <MusicPlayer isPlaying={isPlaying} onToggle={handleToggleMusic} />
       {/* Hero Section */}
       <section 
         className="relative min-h-[750px] flex items-center justify-center pt-12 pb-32 px-4"
