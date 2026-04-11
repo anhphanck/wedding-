@@ -538,7 +538,7 @@ yêu người vừa ý, cưới người mình thương...
                   <p className="text-gray-500 italic text-sm md:text-base">ÔNG: PHAN THÔNG GIAO</p>
                   <p className="text-gray-500 italic text-sm md:text-base">BÀ: QUẤT THỊ LUYẾN</p>
                 </div>
-                <p className="text-gray-500 italic text-sm md:text-base mt-4">Khu Suông 1 - Xã Phú Khê - Huyện Cẩm Khê - Tỉnh Phú Thọ</p>
+                <p className="text-gray-500 italic text-sm md:text-base mt-4">Khu Suông 1 - Xã Phú Khê - Tỉnh Phú Thọ</p>
               </div>
                 <a 
                   href="https://www.google.com/maps/search/?api=1&query=21.381900,105.085898" 
