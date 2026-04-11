@@ -27,6 +27,68 @@ const FadeInSection = ({ children, className = "", delay = 0 }) => {
   );
 };
 
+const SlideInSection = ({ children, className = "", from = "left", delay = 0 }) => {
+  const x = from === "left" ? -72 : 72;
+  return (
+    <motion.div
+      initial={{ opacity: 0, x }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.75, delay, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const eventHeadingVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.14, delayChildren: 0.06 },
+  },
+};
+
+const eventTitleVariants = {
+  hidden: { opacity: 0, y: -28, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const eventLineVariants = {
+  hidden: { scaleX: 0, opacity: 0 },
+  visible: {
+    scaleX: 1,
+    opacity: 1,
+    transition: { duration: 0.55, ease: "easeOut" },
+  },
+};
+
+const EventSectionHeading = () => (
+  <motion.div
+    className="text-center mb-16"
+    variants={eventHeadingVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: "-90px" }}
+  >
+    <motion.h2
+      variants={eventTitleVariants}
+      className="font-cursive text-5xl md:text-6xl text-[#8d6e63] drop-shadow-sm"
+    >
+      Sự Kiện
+    </motion.h2>
+    <motion.div
+      variants={eventLineVariants}
+      className="h-[2px] w-28 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mx-auto mt-6 origin-center"
+    />
+  </motion.div>
+);
+
 const MusicPlayer = ({ isPlaying, onToggle, hasStarted }) => {
   const audioRef = useRef(null);
 
@@ -146,6 +208,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [scrollLocked, setScrollLocked] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
   const [rsvpSelection, setRsvpSelection] = useState("");
@@ -189,7 +252,7 @@ function App() {
   };
 
   const handleStart = () => {
-    console.log("Start button clicked - Activating YouTube Player");
+    window.scrollTo(0, 0);
     setHasStarted(true);
     setIsPlaying(true);
     setIsExiting(true);
@@ -236,9 +299,45 @@ function App() {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (!scrollLocked) return;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const html = document.documentElement;
+    const prev = {
+      bodyOverflow: body.style.overflow,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyLeft: body.style.left,
+      bodyRight: body.style.right,
+      bodyWidth: body.style.width,
+      htmlOverflow: html.style.overflow,
+    };
+
+    body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+
+    return () => {
+      body.style.overflow = prev.bodyOverflow;
+      body.style.position = prev.bodyPosition;
+      body.style.top = prev.bodyTop;
+      body.style.left = prev.bodyLeft;
+      body.style.right = prev.bodyRight;
+      body.style.width = prev.bodyWidth;
+      html.style.overflow = prev.htmlOverflow;
+      window.scrollTo(0, 0);
+    };
+  }, [scrollLocked]);
+
   return (
     <div className="bg-[#fdfaf5] font-sans text-gray-800">
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setScrollLocked(false)}>
         {showWelcome && <WelcomeOverlay onStart={handleStart} isExiting={isExiting} />}
       </AnimatePresence>
       <MusicPlayer isPlaying={isPlaying} onToggle={handleToggleMusic} hasStarted={hasStarted} />
@@ -512,12 +611,10 @@ yêu người vừa ý, cưới người mình thương...
       {/* Events / Timeline */}
       <section className="py-20 bg-white px-4">
         <div className="max-w-4xl mx-auto">
-          <FadeInSection className="text-center mb-16">
-            <h2 className="font-cursive text-5xl text-[#8d6e63]">Sự Kiện</h2>
-          </FadeInSection>
-          
+          <EventSectionHeading />
+
           <div className="space-y-12">
-            <FadeInSection className="flex flex-col md:flex-row gap-8 items-center">
+            <SlideInSection from="right" className="flex flex-col md:flex-row gap-8 items-center">
               <div className="w-full md:w-1/2 aspect-video overflow-hidden rounded-lg shadow-md">
                 <img src={tieccuoi1} alt="Ceremony" className="w-full h-full object-cover" />
               </div>
@@ -529,9 +626,9 @@ yêu người vừa ý, cưới người mình thương...
                   <span>08:00 AM</span>
                 </div>
               </div>
-            </FadeInSection>
+            </SlideInSection>
             
-            <FadeInSection className="flex flex-col md:flex-row-reverse gap-8 items-center">
+            <SlideInSection from="left" className="flex flex-col md:flex-row-reverse gap-8 items-center">
               <div className="w-full md:w-1/2 aspect-video overflow-hidden rounded-lg shadow-md">
                 <img src={tieccuoi} alt="Party" className="w-full h-full object-cover" />
               </div>
@@ -543,7 +640,7 @@ yêu người vừa ý, cưới người mình thương...
                   <span>16:00 PM</span>
                 </div>
               </div>
-            </FadeInSection>
+            </SlideInSection>
           </div>
         </div>
       </section>

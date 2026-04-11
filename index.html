@@ -6,17 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wedding Invitation - Tiến Huy & Ánh Nga</title>
     
-    <!-- Open Graph / Facebook / Zalo -->
+    <!-- Open Graph / Facebook / Zalo (og:image bắt buộc là URL https đầy đủ khi deploy — xem VITE_SITE_URL trong .env.production) -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="__OG_PAGE_URL__" />
     <meta property="og:title" content="Lời mời dự lễ thành hôn - Tiến Huy & Ánh Nga" />
     <meta property="og:description" content="Trân trọng kính mời bạn đến dự lễ thành hôn của chúng mình vào ngày 19/04/2026. Sự hiện diện của bạn là niềm hạnh phúc lớn nhất đối với gia đình chúng mình." />
-    <meta property="og:image" content="/preview.jpg" />
-    
+    <meta property="og:image" content="__OG_IMAGE_URL__" />
+    <meta property="og:image:secure_url" content="__OG_IMAGE_URL__" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="Tiến Huy & Ánh Nga - Thiệp cưới" />
+    <link rel="canonical" href="__OG_PAGE_URL__" />
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Lời mời dự lễ thành hôn - Tiến Huy & Ánh Nga" />
-    <meta property="twitter:description" content="Trân trọng kính mời bạn đến dự lễ thành hôn của chúng mình vào ngày 19/04/2026." />
-    <meta property="twitter:image" content="/preview.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lời mời dự lễ thành hôn - Tiến Huy & Ánh Nga" />
+    <meta name="twitter:description" content="Trân trọng kính mời bạn đến dự lễ thành hôn của chúng mình vào ngày 19/04/2026." />
+    <meta name="twitter:image" content="__OG_IMAGE_URL__" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
